@@ -20,4 +20,4 @@ const accountId = AccountId({
   }),
 });
 
-const signer = new Signer(accountId, keyPair);
+export const signer = new Signer(accountId, keyPair);
