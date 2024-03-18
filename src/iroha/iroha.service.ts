@@ -10,4 +10,8 @@ export class IrohaService {
   constructor() {
     this.client = new Client({ signer });
   }
+
+  async getAccountDetails(accountID: string): Promise<any> {
+    return this.getAccountDetails(accountID);
+  }
 }
