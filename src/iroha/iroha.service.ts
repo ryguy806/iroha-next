@@ -12,12 +12,12 @@ export class IrohaService {
   }
 
   //Domain functions
-  async viewDomains(): Promise<any> {
-    return this.viewDomains();
+  async viewDomains(): Promise<string> {
+    return 'All the domains';
   }
 
-  async registerDomain(): Promise<any> {
-    return this.registerDomain();
+  async registerDomain(): Promise<void> {
+    this.registerDomain();
   }
 
   //Account functions
@@ -25,13 +25,17 @@ export class IrohaService {
     return this.viewAllAccounts();
   }
 
-  async registerAccount(): Promise<any> {
+  async viewAccountDetails(accountId: string): Promise<string> {
+    return `Account: ${accountId}`;
+  }
+
+  async registerAccount(): Promise<void> {
     return this.registerAccount();
   }
 
   //Transaction functions
-  async getTransactionDetails(transactionID: string): Promise<any> {
-    return this.getTransactionDetails(transactionID);
+  async viewTransactionDetails(transactionID: string): Promise<any> {
+    return this.viewTransactionDetails(transactionID);
   }
 
   async viewAllTransactions(): Promise<any> {
@@ -39,20 +43,20 @@ export class IrohaService {
   }
 
   //Asset functions
-  async getAssetDetails(assetID: string): Promise<any> {
-    return this.getAssetDetails(assetID);
+  async viewAssetDetails(assetID: string): Promise<any> {
+    return this.viewAssetDetails(assetID);
   }
 
-  async registerAsset(): Promise<any> {
+  async registerAsset(): Promise<void> {
     return this.registerAsset();
   }
   async mintAsset(): Promise<any> {
     return this.mintAsset();
   }
-  async transferAsset(): Promise<any> {
+  async transferAsset(): Promise<void> {
     return this.transferAsset();
   }
-  async burnAsset(): Promise<any> {
+  async burnAsset(): Promise<void> {
     return this.burnAsset();
   }
 

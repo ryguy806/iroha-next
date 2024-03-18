@@ -1,68 +1,72 @@
 import { Controller, Get, Param, Post } from '@nestjs/common';
+import { IrohaService } from './iroha.service';
 
 @Controller('iroha')
 export class IrohaController {
+  IrohaServiceProvider = new IrohaService();
   @Get('/domains')
-  viewDomains(): string {
-    return 'ALl the domains!';
+  viewDomains(): Promise<string> {
+    return this.IrohaServiceProvider.viewDomains();
   }
 
   @Post('/domains/register')
-  registerDomain(): void {}
+  registerDomain(): void {
+    this.IrohaServiceProvider.registerDomain();
+  }
 
   @Get('/accounts/')
-  viewAllAccounts(): string {
-    return 'All the Accounts';
+  viewAllAccounts(): Promise<string> {
+    return this.IrohaServiceProvider.viewAllAccounts();
   }
 
   @Get('/accounts/:accountId')
-  getAccountDetails(@Param(':accountId') accountId: string): string {
-    return `Account: ${accountId}`;
+  viewAccountDetails(@Param(':accountId') accountId: string): Promise<string> {
+    return this.IrohaServiceProvider.viewAccountDetails(accountId);
   }
 
   @Post('/accounts/register')
-  registerAccount(): string {
-    return 'Account Registered';
+  registerAccount(): void {
+    this.IrohaServiceProvider.registerAccount();
   }
 
   @Get('/transactions/')
-  viewAllTransactions(): string {
-    return 'All the Transactions';
+  viewAllTransactions(): Promise<string> {
+    return this.IrohaServiceProvider.viewAllTransactions();
   }
 
   @Get('/transactions/:transactionId')
   getTransactionDetails(
     @Param(':transactionId') transactionId: string,
-  ): string {
-    return `Transaction ${transactionId}`;
+  ): Promise<string> {
+    return this.IrohaServiceProvider.viewTransactionDetails(transactionId);
   }
 
   @Get('/assets/')
-  viewAllAssets(): string {
-    return 'All the Assets';
+  viewAllAssets(): Promise<string> {
+    return this.IrohaServiceProvider.viewAllAssets();
   }
 
   @Get('/assets/:assetId')
-  getAssetDetails(@Param(':assetId') assetId: string): string {
-    return `Asset: ${assetId}`;
+  viweAssetDetails(@Param(':assetId') assetId: string): Promise<string> {
+    return this.IrohaServiceProvider.viewAssetDetails(assetId);
   }
 
   @Post('/assets/register')
-  registerAsset(): string {
-    return 'Asset registered';
+  registerAsset(): void {
+    this.IrohaServiceProvider.registerAsset();
   }
 
   @Post('/assets/mint')
-  mintAsset(): string {
-    return 'Asset minted';
+  mintAsset(): void {
+    this.mintAsset();
   }
   @Post('/assets/transfer')
-  transferAsset(): string {
-    return 'Asset transfered';
+  transferAsset(): void {
+    this.transferAsset();
   }
 
   @Post('/assets/burn')
-  burnAsset(): string {
-    return 'Asset burned';
+  burnAsset(): void {
+    this.burnAsset();
   }
 }
