@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { Client, Signer } from '@iroha2/client';
+import { Client } from '@iroha2/client';
 
-declare const signer: Signer;
+import { signer } from '../utilities/cryptoUtils';
 
 @Injectable()
 export class IrohaService {
