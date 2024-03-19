@@ -4,6 +4,7 @@ import { IrohaService } from './iroha.service';
 @Controller('iroha')
 export class IrohaController {
   IrohaServiceProvider = new IrohaService();
+
   @Get('/domains')
   viewDomains(): Promise<string> {
     return this.IrohaServiceProvider.viewDomains();
