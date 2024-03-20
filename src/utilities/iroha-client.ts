@@ -1,9 +1,21 @@
-import { DomainId, Executable, Expression, IdentifiableBox, Metadata, NewDomain, OptionIpfsPath, RegistrableBox, Value } from "@iroha2/data-model/dist/types/__generated__.d";
-import { client, toriiRequirements } from "./cryptoUtils";
+import { Client, Signer } from '@iroha2/client';
+import { adapter as WS } from '@iroha2/client/dist/web-socket/native';
+import { crypto } from './cryptoUtils';
+import client_config from '../../config.json';
+import { AccountId } from '@iroha2/data-model/dist/types/__generated__.d';
 
+const HOST = window.location.host;
 
-async function registerDomain() {
-    const registerBox = RegistrableBox({object: EvaluateToRegistrableBox({expression: Expression('Raw', Value('Identifiable', IdentifiableBox('NewDomain': NewDomain({id: DomainId({name: domainName}), metadata: Metadata({map: MapNameValue(new Map())}), logo: OptionIpfsPath('None')}))))})})
+export const toriiPre = {
+  apiURL: `http://${HOST}/torii/api`,
+  telemetryURL: `http://${HOST}/torii/telemetry`,
+  ws: WS,
+  fetch: fetch.bind(window),
+};
 
-    await client.submitExecutable(toriiRequirements, Executable('Instructions', VecInstructions([Instruction('Register', registerBox)])));
-}
+const signer = new Signer(
+  client_config.account as AccountId,
+  crypto.KeyPair.fromJSON(client_config),
+);
+
+export const client = new Client({ signer });
