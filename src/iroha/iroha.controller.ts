@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post } from '@nestjs/common';
+import { Controller, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
 import { IrohaService } from './iroha.service';
 
 @Controller('iroha')
@@ -10,9 +10,9 @@ export class IrohaController {
     return this.IrohaServiceProvider.viewDomains();
   }
 
-  @Post('/domains/register')
-  registerDomain(): void {
-    this.IrohaServiceProvider.registerDomain();
+  @Post('/domains/register/:name')
+  registerDomain(@Param('name') name: string) {
+    return this.IrohaServiceProvider.registerDomain(name);
   }
 
   @Get('/accounts/')
@@ -21,13 +21,15 @@ export class IrohaController {
   }
 
   @Get('/accounts/:accountId')
-  viewAccountDetails(@Param(':accountId') accountId: string): Promise<string> {
+  viewAccountDetails(
+    @Param(':accountId', ParseIntPipe) accountId: number,
+  ): Promise<string> {
     return this.IrohaServiceProvider.viewAccountDetails(accountId);
   }
 
-  @Post('/accounts/register')
-  registerAccount(): void {
-    this.IrohaServiceProvider.registerAccount();
+  @Post('/accounts/register/:accountId')
+  registerAccount(@Param(':accountId', ParseIntPipe) accountId) {
+    return this.IrohaServiceProvider.registerAccount(accountId);
   }
 
   @Get('/transactions/')
@@ -37,7 +39,7 @@ export class IrohaController {
 
   @Get('/transactions/:transactionId')
   getTransactionDetails(
-    @Param(':transactionId') transactionId: string,
+    @Param(':transactionId', ParseIntPipe) transactionId: number,
   ): Promise<string> {
     return this.IrohaServiceProvider.viewTransactionDetails(transactionId);
   }
@@ -48,16 +50,16 @@ export class IrohaController {
   }
 
   @Get('/assets/:assetId')
-  viweAssetDetails(@Param(':assetId') assetId: string): Promise<string> {
+  viewAssetDetails(@Param(':assetId') assetId: string): Promise<string> {
     return this.IrohaServiceProvider.viewAssetDetails(assetId);
   }
 
-  @Post('/assets/register')
-  registerAsset(): void {
-    this.IrohaServiceProvider.registerAsset();
+  @Post('/assets/register/:assetId')
+  registerAsset(@Param('assetId') assetId: string) {
+    return this.IrohaServiceProvider.registerAsset(assetId);
   }
 
-  @Post('/assets/mint')
+  @Post('/assets/mint/')
   mintAsset(): void {
     this.mintAsset();
   }

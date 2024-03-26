@@ -1,45 +1,43 @@
 import { Injectable } from '@nestjs/common';
-import { Client } from '@iroha2/client';
 
-import { signer } from '../utilities/cryptoUtils';
+const domains = [];
+const accounts = [];
+const assets = [];
+const transactions = [];
 
 @Injectable()
 export class IrohaService {
-  private client: Client;
-
-  constructor() {
-    this.client = new Client({ signer });
-  }
-
   //Domain functions
   async viewDomains(): Promise<string> {
-    return 'All the domains';
+    return await domains.toString();
   }
 
-  async registerDomain(): Promise<void> {
-    this.registerDomain();
+  async registerDomain(domain): Promise<string> {
+    domains.push(domain);
+    return await (domain + ' Added!');
   }
 
   //Account functions
   async viewAllAccounts(): Promise<any> {
-    return this.viewAllAccounts();
+    return accounts.toString();
   }
 
-  async viewAccountDetails(accountId: string): Promise<string> {
-    return `Account: ${accountId}`;
+  async viewAccountDetails(accountId: number): Promise<string> {
+    return accounts[accountId].toString();
   }
 
-  async registerAccount(): Promise<void> {
-    return this.registerAccount();
+  async registerAccount(account: string) {
+    accounts.push(account);
+    return await (account + ' Added!');
   }
 
   //Transaction functions
-  async viewTransactionDetails(transactionID: string): Promise<any> {
-    return this.viewTransactionDetails(transactionID);
+  async viewTransactionDetails(transactionID: number): Promise<string> {
+    return await transactions[transactionID].toString();
   }
 
-  async viewAllTransactions(): Promise<any> {
-    return this.viewAllTransactions();
+  async viewAllTransactions(): Promise<string> {
+    return transactions.toString();
   }
 
   //Asset functions
@@ -47,20 +45,24 @@ export class IrohaService {
     return this.viewAssetDetails(assetID);
   }
 
-  async registerAsset(): Promise<void> {
-    return this.registerAsset();
+  async registerAsset(assetId): Promise<string> {
+    assets.push(assetId);
+    return await (assetId + ' Added!');
   }
   async mintAsset(): Promise<any> {
-    return this.mintAsset();
+    transactions.push('Minted Asset');
+    return 'Asset Minted';
   }
   async transferAsset(): Promise<void> {
+    transactions.push('Transfered Asset');
     return this.transferAsset();
   }
   async burnAsset(): Promise<void> {
+    transactions.push('Burned Asset');
     return this.burnAsset();
   }
 
   async viewAllAssets(): Promise<any> {
-    return this.viewAllAssets();
+    return await assets.toString();
   }
 }
